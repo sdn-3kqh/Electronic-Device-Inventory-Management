@@ -10,7 +10,7 @@ const createAdminUser = async () => {
     console.log('Connected to MongoDB');
 
     // Check if admin already exists
-    const existingAdmin = await User.findOne({ email: 'admin@example.com' });
+    const existingAdmin = await User.findOne({ email: 'admin@edims.com' });
     if (existingAdmin) {
       console.log('Admin user already exists!');
       console.log('Email:', existingAdmin.email);
@@ -22,7 +22,7 @@ const createAdminUser = async () => {
 
     // Create admin user
     const admin = new User({
-      email: 'admin@example.com',
+      email: 'admin@edims.com',
       password: password,
       firstName: 'System',
       lastName: 'Administrator',
