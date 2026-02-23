@@ -15,7 +15,8 @@ const deviceSchema = new mongoose.Schema({
   locationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
   status: { type: String, enum: ['available', 'assigned', 'in_maintenance', 'retired'], default: 'available' },
   condition: { type: String, enum: ['new', 'good', 'fair', 'poor'], default: 'good' },
-  barcode: { type: String, trim: true }
+  barcode: { type: String, trim: true },
+  imageUrl: { type: String, trim: true }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Device', deviceSchema);
