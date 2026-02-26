@@ -7,7 +7,7 @@ const errorHandler = require('./middleware/errorHandler');
 // Import routes
 const authRoutes = require('./routes/authRoutes');
 const deviceRoutes = require('./routes/deviceRoutes');
-// const deviceCategoryRoutes = require('./routes/deviceCategoryRoutes');
+const deviceCategoryRoutes = require('./routes/deviceCategoryRoutes');
 // const assignmentRoutes = require('./routes/assignmentRoutes');
 // const maintenanceRoutes = require('./routes/maintenanceRoutes');
 // const warrantyRoutes = require('./routes/warrantyRoutes');
@@ -32,8 +32,9 @@ app.use(express.urlencoded({ extended: true }));``
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/devices', deviceRoutes);
-// app.use('/api/device-categories', deviceCategoryRoutes);
-// app.use('/api/assignments', assignmentRoutes);
+// also allow base '/devices' for compatibility with hardcoded examples/legacy clients
+app.use('/devices', deviceRoutes);
+app.use('/api/categories', deviceCategoryRoutes);// app.use('/api/assignments', assignmentRoutes);
 // app.use('/api/maintenance', maintenanceRoutes);
 // app.use('/api/warranties', warrantyRoutes);
 // app.use('/api/depreciation', depreciationRoutes);
