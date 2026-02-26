@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const DeviceCategory = require('./DeviceCategory');
+const Location = require('./Location');
 
 const deviceSchema = new mongoose.Schema({
   assetTag: { type: String, trim: true },
