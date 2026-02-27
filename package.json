@@ -10,18 +10,26 @@
     "seed": "node src/scripts/seedDatabase.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["inventory", "device-management", "express", "mongodb", "asset-tracking"],
+  "keywords": [
+    "inventory",
+    "device-management",
+    "express",
+    "mongodb",
+    "asset-tracking"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^8.0.0",
-    "dotenv": "^16.3.1",
-    "cors": "^2.8.5",
     "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.0",
     "multer": "^2.0.0-rc.4",
-    "express-validator": "^7.0.1"
+    "nodemailer": "^8.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
