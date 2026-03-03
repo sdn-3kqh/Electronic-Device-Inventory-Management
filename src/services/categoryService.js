@@ -1,6 +1,6 @@
 const DeviceCategory = require('../models/DeviceCategory');
 const Device = require('../models/Device');
-
+const DepreciationRule = require('../models/DepreciationRule');
 // Create
 exports.createCategory = async (data) => {
   const existing = await DeviceCategory.findOne({ name: data.name });
