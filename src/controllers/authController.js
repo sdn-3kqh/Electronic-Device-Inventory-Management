@@ -4,7 +4,7 @@ const { validatePasswordStrength } = require('../utils/passwordHelper');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key';
-const JWT_EXPIRES_IN = '60m';
+const JWT_EXPIRES_IN = '7d';
 const REFRESH_EXPIRES_IN = '7d';
 
 // Generate token pair

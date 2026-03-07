@@ -2,6 +2,13 @@
 const Device = require('../models/Device');
 const Assignment = require('../models/Assignment'); // Để check assignment khi delete
 
+// Barcode generation utility
+const generateBarcode = () => {
+  const timestamp = Date.now().toString();
+  const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+  return `BC-${timestamp.slice(-8)}-${random}`;
+};
+
 // Add Device (UC-05)
 exports.addDevice = async (req, res) => {
   try {
@@ -123,16 +130,38 @@ exports.searchDevices = async (req, res) => {
 // Filter Devices (UC-10) - Example: by status, category, location
 exports.filterDevices = async (req, res) => {
   try {
-    const { status, categoryId, locationId } = req.query;
+    const { status, categoryId, locationId, condition, page = 1, limit = 20 } = req.query;
     const filter = {};
     if (status) filter.status = status;
     if (categoryId) filter.categoryId = categoryId;
     if (locationId) filter.locationId = locationId;
+    if (condition) filter.condition = condition;
+
+    const pageNum = parseInt(page) || 1;
+    const limitNum = parseInt(limit) || 20;
+    const skip = (pageNum - 1) * limitNum;
 
     const devices = await Device.find(filter)
       .populate('categoryId', 'name')
-      .populate('locationId', 'name');
-    res.json(devices);
+      .populate('locationId', 'name')
+      .skip(skip)
+      .limit(limitNum)
+      .sort({ createdAt: -1 });
+
+    const total = await Device.countDocuments(filter);
+    const totalPages = Math.ceil(total / limitNum);
+
+    res.json({
+      data: devices,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total,
+        totalPages,
+        hasNext: pageNum < totalPages,
+        hasPrev: pageNum > 1
+      }
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -161,20 +190,326 @@ exports.disposeDevice = async (req, res) => {
   }
 };
 
-// Additional: Get All Devices (for listing)
+// Additional: Get All Devices (for listing) with pagination
 exports.getAllDevices = async (req, res) => {
   try {
+    const { page = 1, limit = 20, sortBy = 'createdAt', sortOrder = '-1' } = req.query;
+    
     let query = {};
     if (req.user.role === 'staff') {
       const assignments = await Assignment.find({ 'assignedTo.userId': req.user.id, status: { $in: ['pending', 'acknowledged', 'active'] } });
       const assignedDeviceIds = assignments.map(a => a.deviceId);
       query._id = { $in: assignedDeviceIds };
     }
+
+    const pageNum = parseInt(page) || 1;
+    const limitNum = parseInt(limit) || 20;
+    const skip = (pageNum - 1) * limitNum;
+
+    const sortObj = {};
+    sortObj[sortBy] = parseInt(sortOrder);
+
     const devices = await Device.find(query)
+      .populate('categoryId', 'name code')
+      .populate('locationId', 'name code')
+      .skip(skip)
+      .limit(limitNum)
+      .sort(sortObj);
+
+    const total = await Device.countDocuments(query);
+    const totalPages = Math.ceil(total / limitNum);
+
+    res.json({
+      data: devices,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total,
+        totalPages,
+        hasNext: pageNum < totalPages,
+        hasPrev: pageNum > 1
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Generate barcode for a device
+exports.generateBarcode = async (req, res) => {
+  try {
+    const { deviceId } = req.params;
+    
+    const device = await Device.findById(deviceId);
+    if (!device) {
+      return res.status(404).json({ message: 'Device not found' });
+    }
+
+    const barcode = generateBarcode();
+    device.barcode = barcode;
+    await device.save();
+
+    res.json({ 
+      deviceId,
+      barcode,
+      message: 'Barcode generated successfully'
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Generate barcodes for multiple devices
+exports.generateMultipleBarcodes = async (req, res) => {
+  try {
+    const { deviceIds } = req.body;
+
+    if (!Array.isArray(deviceIds) || deviceIds.length === 0) {
+      return res.status(400).json({ message: 'deviceIds must be a non-empty array' });
+    }
+
+    const result = [];
+    for (const deviceId of deviceIds) {
+      const device = await Device.findById(deviceId);
+      if (device) {
+        const barcode = generateBarcode();
+        device.barcode = barcode;
+        await device.save();
+        result.push({ deviceId, barcode });
+      }
+    }
+
+    res.json({ 
+      message: 'Barcodes generated successfully',
+      count: result.length,
+      barcodes: result
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Bulk import devices from CSV data
+exports.bulkImportDevices = async (req, res) => {
+  try {
+    const { devices } = req.body;
+
+    if (!Array.isArray(devices) || devices.length === 0) {
+      return res.status(400).json({ message: 'devices must be a non-empty array' });
+    }
+
+    const results = {
+      imported: [],
+      failed: []
+    };
+
+    for (const deviceData of devices) {
+      try {
+        // Check serial number uniqueness
+        const existing = await Device.findOne({ serialNumber: deviceData.serialNumber });
+        if (existing) {
+          results.failed.push({
+            serialNumber: deviceData.serialNumber,
+            error: 'Serial number already exists'
+          });
+          continue;
+        }
+
+        const device = new Device({
+          ...deviceData,
+          barcode: deviceData.barcode || generateBarcode()
+        });
+
+        await device.save();
+        results.imported.push({
+          _id: device._id,
+          name: device.name,
+          serialNumber: device.serialNumber,
+          barcode: device.barcode
+        });
+      } catch (error) {
+        results.failed.push({
+          serialNumber: deviceData.serialNumber,
+          error: error.message
+        });
+      }
+    }
+
+    res.json({
+      message: 'Bulk import completed',
+      imported: results.imported.length,
+      failed: results.failed.length,
+      details: results
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Bulk export devices
+exports.bulkExportDevices = async (req, res) => {
+  try {
+    const { filter = {} } = req.body;
+
+    const devices = await Device.find(filter)
       .populate('categoryId', 'name')
       .populate('locationId', 'name')
+      .lean();
+
+    const csvData = devices.map(device => ({
+      id: device._id,
+      assetTag: device.assetTag || '',
+      serialNumber: device.serialNumber || '',
+      name: device.name,
+      category: device.categoryId?.name || '',
+      manufacturer: device.manufacturer || '',
+      model: device.model || '',
+      purchaseDate: device.purchaseDate ? new Date(device.purchaseDate).toISOString().split('T')[0] : '',
+      purchasePrice: device.purchasePrice || 0,
+      currentValue: device.currentValue || 0,
+      salvageValue: device.salvageValue || 0,
+      location: device.locationId?.name || '',
+      status: device.status,
+      condition: device.condition,
+      barcode: device.barcode || ''
+    }));
+
+    res.json({
+      count: csvData.length,
+      data: csvData
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Bulk update device status
+exports.bulkUpdateStatus = async (req, res) => {
+  try {
+    const { deviceIds, status } = req.body;
+
+    if (!Array.isArray(deviceIds) || !status) {
+      return res.status(400).json({ message: 'deviceIds array and status are required' });
+    }
+
+    const result = await Device.updateMany(
+      { _id: { $in: deviceIds } },
+      { status }
+    );
+
+    res.json({
+      message: 'Status updated successfully',
+      modifiedCount: result.modifiedCount,
+      matchedCount: result.matchedCount
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Bulk update device location
+exports.bulkUpdateLocation = async (req, res) => {
+  try {
+    const { deviceIds, locationId } = req.body;
+
+    if (!Array.isArray(deviceIds) || !locationId) {
+      return res.status(400).json({ message: 'deviceIds array and locationId are required' });
+    }
+
+    const result = await Device.updateMany(
+      { _id: { $in: deviceIds } },
+      { locationId }
+    );
+
+    res.json({
+      message: 'Location updated successfully',
+      modifiedCount: result.modifiedCount,
+      matchedCount: result.matchedCount
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Advanced search with filters
+exports.advancedSearch = async (req, res) => {
+  try {
+    const { 
+      keyword, 
+      status, 
+      categoryId, 
+      locationId, 
+      condition,
+      minPrice,
+      maxPrice,
+      dateFrom,
+      dateTo,
+      page = 1, 
+      limit = 20 
+    } = req.query;
+
+    const filter = {};
+
+    // Text search
+    if (keyword) {
+      filter.$or = [
+        { name: { $regex: keyword, $options: 'i' } },
+        { serialNumber: { $regex: keyword, $options: 'i' } },
+        { model: { $regex: keyword, $options: 'i' } },
+        { manufacturer: { $regex: keyword, $options: 'i' } },
+        { barcode: { $regex: keyword, $options: 'i' } }
+      ];
+    }
+
+    // Exact filters
+    if (status) filter.status = status;
+    if (categoryId) filter.categoryId = categoryId;
+    if (locationId) filter.locationId = locationId;
+    if (condition) filter.condition = condition;
+
+    // Price range
+    if (minPrice || maxPrice) {
+      filter.currentValue = {};
+      if (minPrice) filter.currentValue.$gte = parseFloat(minPrice);
+      if (maxPrice) filter.currentValue.$lte = parseFloat(maxPrice);
+    }
+
+    // Date range
+    if (dateFrom || dateTo) {
+      filter.purchaseDate = {};
+      if (dateFrom) filter.purchaseDate.$gte = new Date(dateFrom);
+      if (dateTo) {
+        const endDate = new Date(dateTo);
+        endDate.setHours(23, 59, 59, 999);
+        filter.purchaseDate.$lte = endDate;
+      }
+    }
+
+    const pageNum = parseInt(page) || 1;
+    const limitNum = parseInt(limit) || 20;
+    const skip = (pageNum - 1) * limitNum;
+
+    const devices = await Device.find(filter)
+      .populate('categoryId', 'name code')
+      .populate('locationId', 'name code')
+      .skip(skip)
+      .limit(limitNum)
       .sort({ createdAt: -1 });
-    res.json(devices);
+
+    const total = await Device.countDocuments(filter);
+    const totalPages = Math.ceil(total / limitNum);
+
+    res.json({
+      data: devices,
+      pagination: {
+        page: pageNum,
+        limit: limitNum,
+        total,
+        totalPages,
+        hasNext: pageNum < totalPages,
+        hasPrev: pageNum > 1
+      }
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
