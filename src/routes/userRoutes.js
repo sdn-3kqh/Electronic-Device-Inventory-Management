@@ -13,4 +13,7 @@ router.post('/', userController.createUser);
 router.put('/:id', userController.updateUser);
 router.delete('/:id', userController.deleteUser);
 
+// Assign role
+router.patch('/:id/role', userController.assignRole);
+
 module.exports = router;
