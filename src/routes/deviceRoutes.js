@@ -10,8 +10,13 @@ router.get('/filter', [authenticate, allRoles], deviceController.filterDevices);
 router.get('/advanced-search', [authenticate, allRoles], deviceController.advancedSearch); // All: Advanced search with pagination
 
 // Barcode operations
+router.get('/barcode/scan/:code', [authenticate, allRoles], deviceController.scanBarcode); // UC-11: Scan barcode/QR to lookup device
 router.post('/barcode/generate/:deviceId', [authenticate, adminOrManager], deviceController.generateBarcode); // Generate single barcode
 router.post('/barcode/generate-multiple', [authenticate, adminOrManager], deviceController.generateMultipleBarcodes); // Generate multiple barcodes
+
+// Asset Label operations (UC-12)
+router.get('/label/:id', [authenticate, adminOrManager], deviceController.printAssetLabel); // UC-12: Get printable label for single device
+router.post('/labels/bulk', [authenticate, adminOrManager], deviceController.bulkPrintAssetLabels); // UC-12: Get printable labels for multiple devices
 
 // Bulk operations
 router.post('/bulk/import', [authenticate, adminOrManager], deviceController.bulkImportDevices); // Bulk import

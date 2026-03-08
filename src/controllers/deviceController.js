@@ -514,3 +514,149 @@ exports.advancedSearch = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+// UC-11: Scan Barcode - Lookup device by barcode/QR code
+exports.scanBarcode = async (req, res) => {
+  try {
+    const { code } = req.params;
+
+    if (!code || !code.trim()) {
+      return res.status(400).json({ message: 'Barcode or QR code is required' });
+    }
+
+    // Try to find by barcode first, then by serialNumber, then by assetTag
+    let device = await Device.findOne({ barcode: code })
+      .populate('categoryId', 'name code description')
+      .populate('locationId', 'name code type address');
+
+    if (!device) {
+      device = await Device.findOne({ serialNumber: code })
+        .populate('categoryId', 'name code description')
+        .populate('locationId', 'name code type address');
+    }
+
+    if (!device) {
+      device = await Device.findOne({ assetTag: code })
+        .populate('categoryId', 'name code description')
+        .populate('locationId', 'name code type address');
+    }
+
+    if (!device) {
+      return res.status(404).json({ message: 'No device found for this code' });
+    }
+
+    // Get current assignment info if assigned
+    let currentAssignment = null;
+    if (device.status === 'assigned') {
+      currentAssignment = await Assignment.findOne({
+        deviceId: device._id,
+        status: { $in: ['pending', 'acknowledged', 'active'] }
+      })
+        .populate('assignedTo.userId', 'firstName lastName email')
+        .populate('assignedTo.departmentId', 'name code');
+    }
+
+    res.json({
+      device,
+      currentAssignment,
+      scannedCode: code,
+      scannedAt: new Date()
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// UC-12: Print Asset Label - Generate printable label data for a device
+exports.printAssetLabel = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const device = await Device.findById(id)
+      .populate('categoryId', 'name code')
+      .populate('locationId', 'name code');
+
+    if (!device) {
+      return res.status(404).json({ message: 'Device not found' });
+    }
+
+    // Generate barcode if device doesn't have one
+    if (!device.barcode) {
+      const timestamp = Date.now().toString();
+      const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+      device.barcode = `BC-${timestamp.slice(-8)}-${random}`;
+      await device.save();
+    }
+
+    const label = {
+      assetTag: device.assetTag || '',
+      name: device.name,
+      serialNumber: device.serialNumber || '',
+      barcode: device.barcode,
+      category: device.categoryId?.name || '',
+      manufacturer: device.manufacturer || '',
+      model: device.model || '',
+      location: device.locationId?.name || '',
+      purchaseDate: device.purchaseDate
+        ? new Date(device.purchaseDate).toISOString().split('T')[0]
+        : '',
+      status: device.status,
+      generatedAt: new Date()
+    };
+
+    res.json(label);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// UC-12: Bulk Print Asset Labels - Generate labels for multiple devices
+exports.bulkPrintAssetLabels = async (req, res) => {
+  try {
+    const { deviceIds } = req.body;
+
+    if (!Array.isArray(deviceIds) || deviceIds.length === 0) {
+      return res.status(400).json({ message: 'deviceIds must be a non-empty array' });
+    }
+
+    const devices = await Device.find({ _id: { $in: deviceIds } })
+      .populate('categoryId', 'name code')
+      .populate('locationId', 'name code');
+
+    const labels = [];
+    for (const device of devices) {
+      // Auto-generate barcode if missing
+      if (!device.barcode) {
+        const timestamp = Date.now().toString();
+        const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+        device.barcode = `BC-${timestamp.slice(-8)}-${random}`;
+        await device.save();
+      }
+
+      labels.push({
+        deviceId: device._id,
+        assetTag: device.assetTag || '',
+        name: device.name,
+        serialNumber: device.serialNumber || '',
+        barcode: device.barcode,
+        category: device.categoryId?.name || '',
+        manufacturer: device.manufacturer || '',
+        model: device.model || '',
+        location: device.locationId?.name || '',
+        purchaseDate: device.purchaseDate
+          ? new Date(device.purchaseDate).toISOString().split('T')[0]
+          : '',
+        status: device.status
+      });
+    }
+
+    res.json({
+      count: labels.length,
+      generatedAt: new Date(),
+      labels
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
