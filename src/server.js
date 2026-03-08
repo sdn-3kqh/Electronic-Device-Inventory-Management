@@ -36,7 +36,7 @@ app.use('/api/devices', deviceRoutes);
 // also allow base '/devices' for compatibility with hardcoded examples/legacy clients
 app.use('/devices', deviceRoutes);
 app.use('/api/categories', deviceCategoryRoutes);// app.use('/api/assignments', assignmentRoutes);
-app.use('/users', userRoutes);
+app.use('/api/users', userRoutes);
 // app.use('/api/maintenance', maintenanceRoutes);
 app.use('/api/warranties', warrantyRoutes);
 app.use('/api/depreciation', depreciationRoutes);

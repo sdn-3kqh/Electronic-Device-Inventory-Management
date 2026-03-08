@@ -85,7 +85,7 @@ exports.updateUser = async (req, res) => {
     const updates = req.body;
 
     if (updates.password)
-      delete updates.password; // không cho update password ở đây
+      delete updates.password;
 
     const user = await User.findByIdAndUpdate(
       req.params.id,
@@ -121,5 +121,49 @@ exports.deleteUser = async (req, res) => {
 
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+
+// =========================
+// ASSIGN ROLE (ADMIN ONLY)
+// =========================
+exports.assignRole = async (req, res) => {
+  try {
+
+    const { role } = req.body;
+
+    const validRoles = ['admin', 'inventory_manager', 'staff'];
+
+    if (!validRoles.includes(role)) {
+      return res.status(400).json({
+        message: 'Invalid role'
+      });
+    }
+
+    const user = await User.findById(req.params.id);
+
+    if (!user)
+      return res.status(404).json({
+        message: 'User not found'
+      });
+
+    user.role = role;
+
+    await user.save();
+
+    res.json({
+      message: 'Role updated successfully',
+      user: {
+        id: user._id,
+        email: user.email,
+        role: user.role
+      }
+    });
+
+  } catch (error) {
+    res.status(400).json({
+      message: error.message
+    });
   }
 };
