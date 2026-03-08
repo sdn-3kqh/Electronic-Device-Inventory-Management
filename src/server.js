@@ -9,8 +9,8 @@ const authRoutes = require('./routes/authRoutes');
 const deviceRoutes = require('./routes/deviceRoutes');
 const deviceCategoryRoutes = require('./routes/deviceCategoryRoutes');
 const userRoutes = require('./routes/userRoutes');
-// const assignmentRoutes = require('./routes/assignmentRoutes');
-// const maintenanceRoutes = require('./routes/maintenanceRoutes');
+const assignmentRoutes = require('./routes/assignmentRoutes');
+const maintenanceRoutes = require('./routes/maintenanceRoutes');
 const warrantyRoutes = require('./routes/warrantyRoutes');
 const depreciationRoutes = require('./routes/depreciationRoutes');
 const systemRoutes = require('./routes/systemRoutes');
@@ -35,15 +35,14 @@ app.use('/api/auth', authRoutes);
 app.use('/api/devices', deviceRoutes);
 // also allow base '/devices' for compatibility with hardcoded examples/legacy clients
 app.use('/devices', deviceRoutes);
-app.use('/api/categories', deviceCategoryRoutes);// app.use('/api/assignments', assignmentRoutes);
+app.use('/api/categories', deviceCategoryRoutes);
+app.use('/api/assignments', assignmentRoutes);
+app.use('/api/maintenance', maintenanceRoutes);
 app.use('/api/users', userRoutes);
-// app.use('/api/maintenance', maintenanceRoutes);
 app.use('/api/warranties', warrantyRoutes);
 app.use('/api/depreciation', depreciationRoutes);
 app.use('/api/system', systemRoutes);
 app.use('/api/reports', reportRoutes);
-// app.use('/api/users', userRoutes);
-// app.use('/api/departments', departmentRoutes);
 app.use('/api/locations', locationRoutes);
 
 // Health check
