@@ -60,10 +60,55 @@ const updateProfileValidation = [
   handleValidation
 ];
 
+//
+// Dev3 Week 1 - Assignment validators
+//
+const assignDeviceValidation = [
+  body('deviceId').isMongoId().withMessage('Valid device ID is required'),
+  body('userId').optional({ nullable: true }).isMongoId().withMessage('Invalid user ID'),
+  body('departmentId').optional({ nullable: true }).isMongoId().withMessage('Invalid department ID'),
+  body('notes').optional().trim().isLength({ max: 500 }).withMessage('Notes cannot exceed 500 characters'),
+  body().custom((value, { req }) => {
+    if (!req.body.userId && !req.body.departmentId) {
+      throw new Error('Either userId or departmentId is required');
+    }
+    if (req.body.userId && req.body.departmentId) {
+      throw new Error('Provide only userId OR departmentId, not both');
+    }
+    return true;
+  }),
+  handleValidation
+];
+
+const updateAssignmentValidation = [
+  body('notes').optional().trim().isLength({ max: 500 }).withMessage('Notes cannot exceed 500 characters'),
+  handleValidation
+];
+
+const transferDeviceValidation = [
+  body('newUserId').optional({ nullable: true }).isMongoId().withMessage('Invalid user ID'),
+  body('newDepartmentId').optional({ nullable: true }).isMongoId().withMessage('Invalid department ID'),
+  body('notes').optional().trim().isLength({ max: 500 }).withMessage('Notes cannot exceed 500 characters'),
+  body().custom((value, { req }) => {
+    if (!req.body.newUserId && !req.body.newDepartmentId) {
+      throw new Error('Either newUserId or newDepartmentId is required');
+    }
+    if (req.body.newUserId && req.body.newDepartmentId) {
+      throw new Error('Provide only newUserId OR newDepartmentId, not both');
+    }
+    return true;
+  }),
+  handleValidation
+];
+//
+
 module.exports = {
   signInValidation,
   registerValidation,
   changePasswordValidation,
   resetPasswordValidation,
-  updateProfileValidation
+  updateProfileValidation,
+  assignDeviceValidation,
+  updateAssignmentValidation,
+  transferDeviceValidation
 };
