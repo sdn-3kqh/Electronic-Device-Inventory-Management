@@ -17,4 +17,19 @@ router.get('/inventory-value', [authenticate, adminOrManager], reportController.
 // Assignment reports
 router.get('/assignments', [authenticate, allRoles], reportController.generateAssignmentReport);
 
+// Maintenance reports
+router.get('/maintenance', [authenticate, adminOrManager], reportController.generateMaintenanceReport);
+
+// Custom report (POST to handle complex filter body)
+router.post('/custom', [authenticate, adminOrManager], reportController.generateCustomReport);
+
+// Schedule reports
+router.post('/schedules', [authenticate, adminOrManager], reportController.createReportConfig);
+router.get('/schedules', [authenticate, adminOrManager], reportController.getReportConfigs);
+router.put('/schedules/:id', [authenticate, adminOrManager], reportController.updateReportConfig);
+router.delete('/schedules/:id', [authenticate, adminOrManager], reportController.deleteReportConfig);
+
+// Export reports (POST because report data can be large)
+router.post('/export', [authenticate, adminOrManager], reportController.exportReport);
+
 module.exports = router;

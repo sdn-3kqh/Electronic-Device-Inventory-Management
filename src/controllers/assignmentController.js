@@ -1,5 +1,7 @@
 const Assignment = require('../models/Assignment');
 const Device = require('../models/Device');
+const User = require('../models/User');
+const Department = require('../models/Department');
 
 exports.assignDevice = async (req, res) => {
   try {
@@ -13,6 +15,23 @@ exports.assignDevice = async (req, res) => {
 
     if (device.status === 'assigned') {
       return res.status(400).json({ message: 'Device is already assigned' });
+    }
+
+    if (userId) {
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      if (user.status === 'inactive') {
+        return res.status(400).json({ message: 'Cannot assign to inactive user' });
+      }
+    }
+
+    if (departmentId) {
+      const department = await Department.findById(departmentId);
+      if (!department) {
+        return res.status(404).json({ message: 'Department not found' });
+      }
     }
 
     // Create assignment
@@ -108,8 +127,6 @@ exports.getUserAssignments = async (req, res) => {
 //
 // Dev3 Week 1 - New controller functions (getAllAssignments, getAssignmentById, updateAssignment, transferDevice)
 //
-const User = require('../models/User');
-const Department = require('../models/Department');
 
 exports.getAllAssignments = async (req, res) => {
   try {

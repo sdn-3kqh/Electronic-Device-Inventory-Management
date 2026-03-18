@@ -42,9 +42,9 @@ const seedDatabase = async () => {
     ]);
     console.log(`✅ Created ${departments.length} departments\n`);
 
-    // 2. Create Users
+    // 2. Create Users (using User.create to trigger pre-save password hashing)
     console.log('👥 Creating users...');
-    const users = await User.insertMany([
+    const users = await User.create([
       {
         email: 'admin@company.com',
         password: 'Admin@123',
