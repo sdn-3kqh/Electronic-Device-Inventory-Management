@@ -40,7 +40,7 @@ app.use('/api/categories', deviceCategoryRoutes);
 // Dev3 Week 1
 app.use('/api/maintenance', maintenanceRoutes);
 app.use('/api/assignments', assignmentRoutes);
-app.use('/users', userRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/warranties', warrantyRoutes);
 app.use('/api/depreciation', depreciationRoutes);
 app.use('/api/system', systemRoutes);
