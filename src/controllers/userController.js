@@ -1,4 +1,6 @@
 const User = require('../models/User');
+const Assignment = require('../models/Assignment');
+const Device = require('../models/Device');
 
 
 // =========================
@@ -165,5 +167,57 @@ exports.assignRole = async (req, res) => {
     res.status(400).json({
       message: error.message
     });
+  }
+};
+
+// =========================
+// DEACTIVATE USER (SOFT DELETE)
+// =========================
+exports.deactivateUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (user.status === 'inactive') {
+      return res.status(400).json({ message: 'User is already inactive' });
+    }
+
+    // BR-1: Prevent deactivation if the user is the last active Admin
+    if (user.role === 'admin') {
+      const activeAdminCount = await User.countDocuments({ role: 'admin', status: 'active' });
+      if (activeAdminCount <= 1) {
+        return res.status(400).json({ message: 'Cannot deactivate the last active administrator' });
+      }
+    }
+
+    user.status = 'inactive';
+    await user.save();
+
+    // Post-conditions: Unassign all devices
+    const activeAssignments = await Assignment.find({
+      'assignedTo.userId': user._id,
+      status: { $in: ['pending', 'acknowledged', 'active'] }
+    });
+
+    for (const assignment of activeAssignments) {
+      assignment.status = 'returned';
+      assignment.returnDate = new Date();
+      assignment.notes = assignment.notes ? `${assignment.notes} | User deactivated` : 'User deactivated';
+      await assignment.save();
+
+      const device = await Device.findById(assignment.deviceId);
+      if (device) {
+        device.status = 'available';
+        await device.save();
+      }
+    }
+
+    res.json({ message: 'User deactivated successfully' });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

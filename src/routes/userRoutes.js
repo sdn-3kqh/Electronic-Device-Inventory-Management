@@ -16,4 +16,7 @@ router.delete('/:id', userController.deleteUser);
 // Assign role
 router.patch('/:id/role', userController.assignRole);
 
+// Deactivate user (Soft delete)
+router.patch('/:id/deactivate', userController.deactivateUser);
+
 module.exports = router;
