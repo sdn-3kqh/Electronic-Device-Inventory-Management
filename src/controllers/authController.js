@@ -2,6 +2,8 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const { validatePasswordStrength } = require('../utils/passwordHelper');
 
+const crypto = require('crypto');
+
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key';
 const JWT_EXPIRES_IN = '7d';
@@ -183,9 +185,42 @@ exports.changePassword = async (req, res) => {
   }
 };
 
+// UC-03: Step 1 - Request password reset (generates token)
 exports.resetPassword = async (req, res) => {
   try {
-    const { email, newPassword } = req.body;
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      // Return success even if user not found to prevent email enumeration
+      return res.json({ message: 'If the email exists, a reset token has been generated' });
+    }
+
+    // Generate a secure reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    user.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    user.resetPasswordExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+    await user.save();
+
+    // In production, send this token via email. For now, return it in response.
+    // TODO: Integrate email service (nodemailer) to send reset link
+    res.json({
+      message: 'Password reset token generated. Use it with /confirm-reset within 15 minutes.',
+      resetToken // Remove this line in production — send via email instead
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// UC-03: Step 2 - Confirm password reset (uses token)
+exports.confirmResetPassword = async (req, res) => {
+  try {
+    const { resetToken, newPassword } = req.body;
+
+    if (!resetToken || !newPassword) {
+      return res.status(400).json({ message: 'Reset token and new password are required' });
+    }
 
     const validation = validatePasswordStrength(newPassword);
     if (!validation.isValid) {
@@ -195,12 +230,20 @@ exports.resetPassword = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email });
+    // Hash the provided token and find matching user
+    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: new Date() }
+    });
+
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(400).json({ message: 'Invalid or expired reset token' });
     }
 
     user.password = newPassword;
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
     user.failedLoginAttempts = 0;
     await user.save();
 

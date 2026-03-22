@@ -14,6 +14,7 @@ const {
 router.post('/signin', signInValidation, authController.signIn);
 router.post('/refresh-token', authController.refreshToken);
 router.post('/reset-password', resetPasswordValidation, authController.resetPassword);
+router.post('/confirm-reset', authController.confirmResetPassword);
 
 // Protected routes
 router.get('/me', authenticate, authController.getProfile);

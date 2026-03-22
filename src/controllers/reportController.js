@@ -5,6 +5,7 @@ const Warranty = require('../models/Warranty');
 const Assignment = require('../models/Assignment');
 const MaintenanceRecord = require('../models/MaintenanceRecord');
 const ReportConfig = require('../models/ReportConfigs');
+const ExcelJS = require('exceljs');
 
 // Generate warranty report
 exports.generateWarrantyReport = async (req, res) => {
@@ -393,9 +394,35 @@ exports.exportReport = async (req, res) => {
     } 
     
     if (format === 'excel') {
-      // For a real production app, we would use a library like 'exceljs' or 'xlsx'.
-      // For now, we return a 501 Not Implemented or suggest they use CSV.
-      return res.status(501).json({ message: 'Excel export requires additional libraries (e.g., exceljs). Please use CSV format.' });
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Report');
+
+      // Add header row from first object keys
+      const headers = Object.keys(data[0]);
+      worksheet.addRow(headers);
+
+      // Style header row
+      worksheet.getRow(1).font = { bold: true };
+      worksheet.getRow(1).fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FFD9E1F2' }
+      };
+
+      // Add data rows
+      data.forEach(row => {
+        worksheet.addRow(headers.map(h => row[h] ?? ''));
+      });
+
+      // Auto-fit column widths
+      worksheet.columns.forEach(col => {
+        col.width = Math.max(12, (col.header || '').length + 4);
+      });
+
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      res.setHeader('Content-Disposition', `attachment; filename=${filename}.xlsx`);
+      await workbook.xlsx.write(res);
+      return res.end();
     }
 
     res.status(400).json({ message: 'Unsupported format. Use csv.' });

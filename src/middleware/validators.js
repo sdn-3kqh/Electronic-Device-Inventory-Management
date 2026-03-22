@@ -48,9 +48,6 @@ const changePasswordValidation = [
 
 const resetPasswordValidation = [
   body('email').isEmail().withMessage('Valid email is required').normalizeEmail(),
-  body('newPassword')
-    .isLength({ min: 8 }).withMessage('New password must be at least 8 characters')
-    .matches(/[A-Z]/).withMessage('Password must contain an uppercase letter'),
   handleValidation
 ];
 

@@ -9,8 +9,22 @@ exports.exportAuditLogs = async (req, res, next) => {
     const { action, module: moduleName, userId, fromDate, toDate } = req.query;
 
     const query = {};
+    
+    // Inventory Manager can only export device-related audit logs
+    if (req.user.role === 'inventory_manager') {
+      query.module = { $in: ['device', 'Device', 'devices', 'Devices'] };
+    }
+    
     if (action) query.action = action;
-    if (moduleName) query.module = moduleName;
+    if (moduleName) {
+      if (req.user.role === 'inventory_manager') {
+        const allowed = ['device', 'Device', 'devices', 'Devices'];
+        if (!allowed.includes(moduleName)) {
+          return res.status(403).json({ message: 'You can only export device-related audit logs' });
+        }
+      }
+      query.module = moduleName;
+    }
     if (userId) query.userId = userId;
     if (fromDate || toDate) {
       query.createdAt = {};
@@ -69,11 +83,23 @@ exports.getAuditLogs = async (req, res, next) => {
 
     const query = {};
 
+    // Inventory Manager can only see device-related audit logs
+    if (req.user.role === 'inventory_manager') {
+      query.module = { $in: ['device', 'Device', 'devices', 'Devices'] };
+    }
+
     if (action) {
       query.action = action;
     }
 
     if (moduleName) {
+      // IM: only allow device module filter
+      if (req.user.role === 'inventory_manager') {
+        const allowed = ['device', 'Device', 'devices', 'Devices'];
+        if (!allowed.includes(moduleName)) {
+          return res.status(403).json({ message: 'You can only view device-related audit logs' });
+        }
+      }
       query.module = moduleName;
     }
 

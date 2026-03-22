@@ -1,0 +1,724 @@
+{
+  "timestamp": "2026-03-22T10:04:19.546Z",
+  "version": "1.0",
+  "collections": {
+    "devices": [
+      {
+        "_id": "69ba8d44bdcadf6c87329a85",
+        "assetTag": "LAP-2024-001",
+        "serialNumber": "SN-LAP-001-2024",
+        "name": "Dell Latitude 5420",
+        "categoryId": "69ba8d44bdcadf6c87329a78",
+        "manufacturer": "Dell",
+        "model": "Latitude 5420",
+        "specifications": {
+          "RAM": "16GB DDR4",
+          "Storage": "512GB SSD",
+          "Processor": "Intel Core i7-1185G7"
+        },
+        "purchaseDate": "2024-01-15T00:00:00.000Z",
+        "purchasePrice": 1200,
+        "currentValue": 1000,
+        "salvageValue": 120,
+        "locationId": "69ba8d44bdcadf6c87329a74",
+        "status": "available",
+        "condition": "good",
+        "barcode": "BC-LAP-001",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.745Z",
+        "updatedAt": "2026-03-18T11:32:20.745Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a86",
+        "assetTag": "LAP-2024-002",
+        "serialNumber": "SN-LAP-002-2024",
+        "name": "HP EliteBook 840",
+        "categoryId": "69ba8d44bdcadf6c87329a78",
+        "manufacturer": "HP",
+        "model": "EliteBook 840 G8",
+        "specifications": {
+          "RAM": "16GB DDR4",
+          "Storage": "512GB SSD",
+          "Processor": "Intel Core i5-1135G7"
+        },
+        "purchaseDate": "2024-02-10T00:00:00.000Z",
+        "purchasePrice": 1100,
+        "currentValue": 950,
+        "salvageValue": 110,
+        "locationId": "69ba8d44bdcadf6c87329a74",
+        "status": "available",
+        "condition": "good",
+        "barcode": "BC-LAP-002",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.745Z",
+        "updatedAt": "2026-03-18T16:01:16.572Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a87",
+        "assetTag": "DSK-2023-001",
+        "serialNumber": "SN-DSK-001-2023",
+        "name": "Dell OptiPlex 7090",
+        "categoryId": "69ba8d44bdcadf6c87329a79",
+        "manufacturer": "Dell",
+        "model": "OptiPlex 7090",
+        "specifications": {
+          "RAM": "32GB DDR4",
+          "Storage": "1TB SSD"
+        },
+        "purchaseDate": "2023-06-20T00:00:00.000Z",
+        "purchasePrice": 1500,
+        "currentValue": 1200,
+        "salvageValue": 150,
+        "locationId": "69ba8d44bdcadf6c87329a76",
+        "status": "assigned",
+        "condition": "good",
+        "barcode": "BC-DSK-001",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.745Z",
+        "updatedAt": "2026-03-18T11:32:20.745Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a88",
+        "assetTag": "MON-2024-001",
+        "serialNumber": "SN-MON-001-2024",
+        "name": "Dell UltraSharp U2720Q",
+        "categoryId": "69ba8d44bdcadf6c87329a7a",
+        "manufacturer": "Dell",
+        "model": "UltraSharp U2720Q",
+        "specifications": {
+          "Screen Size": "27 inches",
+          "Resolution": "4K UHD (3840x2160)"
+        },
+        "purchaseDate": "2024-03-01T00:00:00.000Z",
+        "purchasePrice": 600,
+        "currentValue": 550,
+        "salvageValue": 90,
+        "locationId": "69ba8d44bdcadf6c87329a76",
+        "status": "available",
+        "condition": "new",
+        "barcode": "BC-MON-001",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.745Z",
+        "updatedAt": "2026-03-18T11:32:20.745Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a89",
+        "assetTag": "MON-2024-002",
+        "serialNumber": "SN-MON-002-2024",
+        "name": "LG 27UK850-W",
+        "categoryId": "69ba8d44bdcadf6c87329a7a",
+        "manufacturer": "LG",
+        "model": "27UK850-W",
+        "specifications": {
+          "Screen Size": "27 inches",
+          "Resolution": "4K UHD (3840x2160)"
+        },
+        "purchaseDate": "2024-03-05T00:00:00.000Z",
+        "purchasePrice": 550,
+        "currentValue": 500,
+        "salvageValue": 82.5,
+        "locationId": "69ba8d44bdcadf6c87329a75",
+        "status": "assigned",
+        "condition": "new",
+        "barcode": "BC-MON-002",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.745Z",
+        "updatedAt": "2026-03-18T11:32:20.745Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a8a",
+        "assetTag": "PRT-2023-001",
+        "serialNumber": "SN-PRT-001-2023",
+        "name": "HP LaserJet Pro M404dn",
+        "categoryId": "69ba8d44bdcadf6c87329a7b",
+        "manufacturer": "HP",
+        "model": "LaserJet Pro M404dn",
+        "specifications": {
+          "Print Type": "Laser Monochrome"
+        },
+        "purchaseDate": "2023-09-15T00:00:00.000Z",
+        "purchasePrice": 400,
+        "currentValue": 320,
+        "salvageValue": 40,
+        "locationId": "69ba8d44bdcadf6c87329a74",
+        "status": "available",
+        "condition": "good",
+        "barcode": "BC-PRT-001",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.745Z",
+        "updatedAt": "2026-03-18T11:32:20.745Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a8b",
+        "assetTag": "PHN-2024-001",
+        "serialNumber": "SN-PHN-001-2024",
+        "name": "iPhone 14 Pro",
+        "categoryId": "69ba8d44bdcadf6c87329a7c",
+        "manufacturer": "Apple",
+        "model": "iPhone 14 Pro",
+        "specifications": {
+          "Storage": "256GB",
+          "OS": "iOS 17"
+        },
+        "purchaseDate": "2024-01-20T00:00:00.000Z",
+        "purchasePrice": 1000,
+        "currentValue": 850,
+        "salvageValue": 100,
+        "locationId": "69ba8d44bdcadf6c87329a74",
+        "status": "assigned",
+        "condition": "good",
+        "barcode": "BC-PHN-001",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.745Z",
+        "updatedAt": "2026-03-18T11:32:20.745Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a8c",
+        "assetTag": "LAP-2023-003",
+        "serialNumber": "SN-LAP-003-2023",
+        "name": "MacBook Pro 14\"",
+        "categoryId": "69ba8d44bdcadf6c87329a78",
+        "manufacturer": "Apple",
+        "model": "MacBook Pro 14\" M2",
+        "specifications": {
+          "RAM": "16GB Unified Memory",
+          "Storage": "512GB SSD",
+          "Processor": "Apple M2 Pro"
+        },
+        "purchaseDate": "2023-11-10T00:00:00.000Z",
+        "purchasePrice": 2000,
+        "currentValue": 1700,
+        "salvageValue": 200,
+        "locationId": "69ba8d44bdcadf6c87329a74",
+        "status": "in_maintenance",
+        "condition": "good",
+        "barcode": "BC-LAP-003",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.745Z",
+        "updatedAt": "2026-03-18T11:32:20.745Z"
+      },
+      {
+        "_id": "69bbb9e1777bdf031276f667",
+        "serialNumber": "SN123456",
+        "name": "Laptop Dell XPS 13",
+        "categoryId": "69ba8d44bdcadf6c87329a78",
+        "manufacturer": "Dell",
+        "model": "XPS 13",
+        "specifications": {
+          "RAM": "16GB",
+          "Storage": "512GB SSD",
+          "Processor": "Intel i7"
+        },
+        "purchaseDate": "2024-01-01T00:00:00.000Z",
+        "purchasePrice": 0,
+        "currentValue": 0,
+        "salvageValue": 0,
+        "status": "available",
+        "condition": "good",
+        "createdAt": "2026-03-19T08:54:57.988Z",
+        "updatedAt": "2026-03-19T08:54:57.988Z",
+        "__v": 0
+      },
+      {
+        "_id": "69bbbc05f050754aaf50ba9d",
+        "serialNumber": "SN123457",
+        "name": "Laptop Dell XPS 13",
+        "categoryId": "69ba8d44bdcadf6c87329a78",
+        "manufacturer": "Dell",
+        "model": "XPS 13",
+        "specifications": {
+          "RAM": "16GB",
+          "Storage": "512GB SSD",
+          "Processor": "Intel i7"
+        },
+        "purchaseDate": "2024-01-01T00:00:00.000Z",
+        "purchasePrice": 0,
+        "currentValue": 0,
+        "salvageValue": 0,
+        "status": "available",
+        "condition": "good",
+        "createdAt": "2026-03-19T09:04:05.137Z",
+        "updatedAt": "2026-03-19T09:04:05.137Z",
+        "__v": 0
+      },
+      {
+        "_id": "69bbc05d570fb4ada0ff91bf",
+        "serialNumber": "SN123449",
+        "name": "Laptop Dell XPS 13",
+        "categoryId": "69ba8d44bdcadf6c87329a78",
+        "manufacturer": "Dell",
+        "model": "XPS 13",
+        "specifications": {
+          "RAM": "16GB",
+          "Storage": "512GB SSD",
+          "Processor": "Intel i7"
+        },
+        "purchaseDate": "2024-01-01T00:00:00.000Z",
+        "purchasePrice": 0,
+        "currentValue": 0,
+        "salvageValue": 0,
+        "status": "available",
+        "condition": "good",
+        "createdAt": "2026-03-19T09:22:37.204Z",
+        "updatedAt": "2026-03-19T09:22:37.204Z",
+        "__v": 0
+      },
+      {
+        "_id": "69bf8d9fdce7e8ee5111ce02",
+        "name": "Dell UltraSharp U2720Q",
+        "categoryId": "69ba8d44bdcadf6c87329a7a",
+        "purchasePrice": 0,
+        "currentValue": 0,
+        "salvageValue": 0,
+        "locationId": "69ba8d44bdcadf6c87329a76",
+        "status": "available",
+        "condition": "good",
+        "createdAt": "2026-03-22T06:35:11.460Z",
+        "updatedAt": "2026-03-22T06:35:11.460Z",
+        "__v": 0
+      },
+      {
+        "_id": "69bf92177f7cfceb1021b66c",
+        "name": "HP EliteBook 840",
+        "categoryId": "69ba8d44bdcadf6c87329a78",
+        "purchasePrice": 0,
+        "currentValue": 0,
+        "salvageValue": 0,
+        "locationId": "69ba8d44bdcadf6c87329a78",
+        "status": "available",
+        "condition": "good",
+        "createdAt": "2026-03-22T06:54:15.932Z",
+        "updatedAt": "2026-03-22T06:54:15.932Z",
+        "__v": 0
+      }
+    ],
+    "categories": [
+      {
+        "_id": "69ba8d44bdcadf6c87329a78",
+        "name": "Laptop",
+        "code": "LAP",
+        "description": "Laptop computers",
+        "customFields": [
+          {
+            "fieldName": "RAM",
+            "fieldType": "text",
+            "required": true
+          },
+          {
+            "fieldName": "Storage",
+            "fieldType": "text",
+            "required": true
+          },
+          {
+            "fieldName": "Processor",
+            "fieldType": "text",
+            "required": true
+          }
+        ],
+        "depreciationRuleId": "69ba8d44bdcadf6c87329a7e",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.410Z",
+        "updatedAt": "2026-03-18T11:32:20.544Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a79",
+        "name": "Desktop",
+        "code": "DSK",
+        "description": "Desktop computers",
+        "customFields": [
+          {
+            "fieldName": "RAM",
+            "fieldType": "text",
+            "required": true
+          },
+          {
+            "fieldName": "Storage",
+            "fieldType": "text",
+            "required": true
+          }
+        ],
+        "depreciationRuleId": "69ba8d44bdcadf6c87329a7f",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.410Z",
+        "updatedAt": "2026-03-18T11:32:20.611Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a7a",
+        "name": "Monitor",
+        "code": "MON",
+        "description": "Computer monitors",
+        "customFields": [
+          {
+            "fieldName": "Screen Size",
+            "fieldType": "text",
+            "required": true
+          },
+          {
+            "fieldName": "Resolution",
+            "fieldType": "text",
+            "required": true
+          }
+        ],
+        "depreciationRuleId": "69ba8d44bdcadf6c87329a80",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.410Z",
+        "updatedAt": "2026-03-18T11:32:20.677Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a7b",
+        "name": "Printer",
+        "code": "PRT",
+        "description": "Printers and scanners",
+        "customFields": [
+          {
+            "fieldName": "Print Type",
+            "fieldType": "text",
+            "required": true
+          }
+        ],
+        "depreciationRuleId": null,
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.410Z",
+        "updatedAt": "2026-03-18T11:32:20.410Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a7c",
+        "name": "Mobile Phone",
+        "code": "PHN",
+        "description": "Mobile phones and tablets",
+        "customFields": [
+          {
+            "fieldName": "Storage",
+            "fieldType": "text",
+            "required": true
+          },
+          {
+            "fieldName": "OS",
+            "fieldType": "text",
+            "required": true
+          }
+        ],
+        "depreciationRuleId": null,
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.410Z",
+        "updatedAt": "2026-03-18T11:32:20.410Z"
+      }
+    ],
+    "locations": [
+      {
+        "_id": "69ba8d44bdcadf6c87329a71",
+        "name": "Main Building",
+        "code": "MB",
+        "type": "building",
+        "parentId": null,
+        "address": "123 Main St",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.344Z",
+        "updatedAt": "2026-03-18T11:32:20.344Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a72",
+        "name": "Floor 1",
+        "code": "MB-F1",
+        "type": "floor",
+        "parentId": null,
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.344Z",
+        "updatedAt": "2026-03-18T11:32:20.344Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a73",
+        "name": "Floor 2",
+        "code": "MB-F2",
+        "type": "floor",
+        "parentId": null,
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.344Z",
+        "updatedAt": "2026-03-18T11:32:20.344Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a74",
+        "name": "IT Room 101",
+        "code": "MB-F1-R101",
+        "type": "room",
+        "parentId": null,
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.344Z",
+        "updatedAt": "2026-03-18T11:32:20.344Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a75",
+        "name": "Conference Room 201",
+        "code": "MB-F2-R201",
+        "type": "room",
+        "parentId": null,
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.344Z",
+        "updatedAt": "2026-03-18T11:32:20.344Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a76",
+        "name": "Office 202",
+        "code": "MB-F2-R202",
+        "type": "room",
+        "parentId": null,
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.344Z",
+        "updatedAt": "2026-03-18T11:32:20.344Z"
+      }
+    ],
+    "departments": [
+      {
+        "_id": "69ba8d44bdcadf6c87329a61",
+        "name": "Information Technology",
+        "code": "IT",
+        "description": "IT Department",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.101Z",
+        "updatedAt": "2026-03-18T11:32:20.101Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a62",
+        "name": "Human Resources",
+        "code": "HR",
+        "description": "HR Department",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.104Z",
+        "updatedAt": "2026-03-18T11:32:20.104Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a63",
+        "name": "Finance",
+        "code": "FIN",
+        "description": "Finance Department",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.104Z",
+        "updatedAt": "2026-03-18T11:32:20.104Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a64",
+        "name": "Marketing",
+        "code": "MKT",
+        "description": "Marketing Department",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.104Z",
+        "updatedAt": "2026-03-18T11:32:20.104Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a65",
+        "name": "Operations",
+        "code": "OPS",
+        "description": "Operations Department",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.104Z",
+        "updatedAt": "2026-03-18T11:32:20.104Z"
+      }
+    ],
+    "warranties": [
+      {
+        "_id": "69ba8d44bdcadf6c87329a93",
+        "deviceId": "69ba8d44bdcadf6c87329a85",
+        "type": "manufacturer",
+        "provider": "Dell",
+        "startDate": "2024-01-15T00:00:00.000Z",
+        "endDate": "2027-01-15T00:00:00.000Z",
+        "coverage": "3-year manufacturer warranty",
+        "cost": 0,
+        "status": "active",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.878Z",
+        "updatedAt": "2026-03-18T11:32:20.878Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a94",
+        "deviceId": "69ba8d44bdcadf6c87329a86",
+        "type": "manufacturer",
+        "provider": "HP",
+        "startDate": "2024-02-10T00:00:00.000Z",
+        "endDate": "2027-02-10T00:00:00.000Z",
+        "coverage": "3-year manufacturer warranty",
+        "cost": 0,
+        "status": "active",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.878Z",
+        "updatedAt": "2026-03-18T11:32:20.878Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a95",
+        "deviceId": "69ba8d44bdcadf6c87329a87",
+        "type": "extended",
+        "provider": "Dell Premium Support",
+        "startDate": "2023-06-20T00:00:00.000Z",
+        "endDate": "2026-06-20T00:00:00.000Z",
+        "coverage": "Extended warranty with on-site support",
+        "cost": 200,
+        "status": "active",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.878Z",
+        "updatedAt": "2026-03-18T11:32:20.878Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a96",
+        "deviceId": "69ba8d44bdcadf6c87329a8c",
+        "type": "manufacturer",
+        "provider": "Apple",
+        "startDate": "2023-11-10T00:00:00.000Z",
+        "endDate": "2024-11-10T00:00:00.000Z",
+        "coverage": "1-year limited warranty",
+        "cost": 0,
+        "status": "active",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.878Z",
+        "updatedAt": "2026-03-18T11:32:20.878Z"
+      }
+    ],
+    "warrantyClaims": [
+      {
+        "_id": "69ba8d44bdcadf6c87329a98",
+        "warrantyId": "69ba8d44bdcadf6c87329a96",
+        "deviceId": "69ba8d44bdcadf6c87329a8c",
+        "claimNumber": "CLM20240101",
+        "filedBy": "69ba8d44bdcadf6c87329a68",
+        "filedDate": "2024-10-15T00:00:00.000Z",
+        "issue": "Battery draining quickly",
+        "status": "in_review",
+        "resolution": "",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.945Z",
+        "updatedAt": "2026-03-18T11:32:20.945Z"
+      }
+    ],
+    "assignments": [
+      {
+        "_id": "69ba8d44bdcadf6c87329a8e",
+        "deviceId": "69ba8d44bdcadf6c87329a86",
+        "assignedTo": {
+          "userId": "69ba8d44bdcadf6c87329a69"
+        },
+        "assignedBy": "69ba8d44bdcadf6c87329a68",
+        "assignmentDate": "2024-02-15T00:00:00.000Z",
+        "status": "returned",
+        "acknowledgedAt": "2024-02-15T00:00:00.000Z",
+        "notes": "For daily work | User deactivated",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.815Z",
+        "updatedAt": "2026-03-18T16:01:16.429Z",
+        "returnDate": "2026-03-18T16:01:16.428Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a8f",
+        "deviceId": "69ba8d44bdcadf6c87329a87",
+        "assignedTo": {
+          "userId": "69ba8d44bdcadf6c87329a6a"
+        },
+        "assignedBy": "69ba8d44bdcadf6c87329a68",
+        "assignmentDate": "2023-07-01T00:00:00.000Z",
+        "status": "active",
+        "acknowledgedAt": "2023-07-01T00:00:00.000Z",
+        "notes": "Finance department workstation",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.815Z",
+        "updatedAt": "2026-03-18T11:32:20.815Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a90",
+        "deviceId": "69ba8d44bdcadf6c87329a89",
+        "assignedTo": {
+          "departmentId": "69ba8d44bdcadf6c87329a64"
+        },
+        "assignedBy": "69ba8d44bdcadf6c87329a68",
+        "assignmentDate": "2024-03-10T00:00:00.000Z",
+        "status": "active",
+        "acknowledgedAt": "2024-03-10T00:00:00.000Z",
+        "notes": "Marketing department conference room",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.815Z",
+        "updatedAt": "2026-03-18T11:32:20.815Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a91",
+        "deviceId": "69ba8d44bdcadf6c87329a8b",
+        "assignedTo": {
+          "userId": "69ba8d44bdcadf6c87329a6b"
+        },
+        "assignedBy": "69ba8d44bdcadf6c87329a67",
+        "assignmentDate": "2024-01-25T00:00:00.000Z",
+        "status": "active",
+        "acknowledgedAt": "2024-01-25T00:00:00.000Z",
+        "notes": "Company phone",
+        "__v": 0,
+        "createdAt": "2026-03-18T11:32:20.815Z",
+        "updatedAt": "2026-03-18T11:32:20.815Z"
+      }
+    ],
+    "users": [
+      {
+        "_id": "69ba8d44bdcadf6c87329a68",
+        "email": "manager@company.com",
+        "firstName": "Sarah",
+        "lastName": "Manager",
+        "role": "inventory_manager",
+        "departmentId": "69ba8d44bdcadf6c87329a61",
+        "status": "active",
+        "failedLoginAttempts": 0,
+        "createdAt": "2026-03-18T11:32:20.178Z",
+        "updatedAt": "2026-03-18T11:32:20.178Z",
+        "__v": 0
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a6b",
+        "email": "staff3@company.com",
+        "firstName": "David",
+        "lastName": "Wilson",
+        "role": "staff",
+        "departmentId": "69ba8d44bdcadf6c87329a64",
+        "status": "active",
+        "failedLoginAttempts": 0,
+        "createdAt": "2026-03-18T11:32:20.178Z",
+        "updatedAt": "2026-03-18T11:32:20.178Z",
+        "__v": 0
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a6a",
+        "email": "staff2@company.com",
+        "firstName": "Emily",
+        "lastName": "Davis",
+        "role": "staff",
+        "departmentId": "69ba8d44bdcadf6c87329a63",
+        "status": "active",
+        "failedLoginAttempts": 0,
+        "createdAt": "2026-03-18T11:32:20.178Z",
+        "updatedAt": "2026-03-22T06:29:36.481Z",
+        "__v": 0,
+        "lastLogin": "2026-03-22T06:29:36.479Z"
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a69",
+        "email": "staff1@company.com",
+        "firstName": "Mike",
+        "lastName": "Johnson",
+        "role": "staff",
+        "departmentId": "69ba8d44bdcadf6c87329a62",
+        "status": "inactive",
+        "failedLoginAttempts": 0,
+        "createdAt": "2026-03-18T11:32:20.178Z",
+        "updatedAt": "2026-03-18T16:01:16.284Z",
+        "__v": 0
+      },
+      {
+        "_id": "69ba8d44bdcadf6c87329a67",
+        "email": "admin@company.com",
+        "firstName": "John",
+        "lastName": "Admin",
+        "role": "admin",
+        "departmentId": "69ba8d44bdcadf6c87329a61",
+        "status": "active",
+        "failedLoginAttempts": 0,
+        "createdAt": "2026-03-18T11:32:20.178Z",
+        "updatedAt": "2026-03-22T10:02:36.236Z",
+        "__v": 0,
+        "lastLogin": "2026-03-22T10:02:36.234Z"
+      }
+    ]
+  }
+}
