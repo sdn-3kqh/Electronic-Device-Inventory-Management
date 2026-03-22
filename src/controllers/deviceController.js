@@ -18,10 +18,12 @@ exports.addDevice = async (req, res) => {
       salvageValue, locationId, status, condition, barcode, imageUrl
     } = req.body;
 
-    // Check if serialNumber is unique (BR-004)
-    const existingDevice = await Device.findOne({ serialNumber });
-    if (existingDevice) {
-      return res.status(400).json({ message: 'Serial number must be unique' });
+    // Check if serialNumber is unique (BR-004) — only when provided
+    if (serialNumber) {
+      const existingDevice = await Device.findOne({ serialNumber });
+      if (existingDevice) {
+        return res.status(400).json({ message: 'Serial number must be unique' });
+      }
     }
 
     // Validate purchaseDate not in future (BR-006)
