@@ -18,7 +18,7 @@ const systemRoutes = require('./routes/systemRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const auditLogRoutes = require('./routes/auditLogRoutes');
 // const userRoutes = require('./routes/userRoutes');
-// const departmentRoutes = require('./routes/departmentRoutes');
+const departmentRoutes = require('./routes/departmentRoutes');
 const locationRoutes = require('./routes/locationRoutes');
 
 const app = express();
@@ -51,6 +51,7 @@ app.use('/api/depreciation', depreciationRoutes);
 app.use('/api/system', systemRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/locations', locationRoutes);
+app.use('/api/departments', departmentRoutes);
 app.use('/api/audit-logs', auditLogRoutes);
 
 // Health check
