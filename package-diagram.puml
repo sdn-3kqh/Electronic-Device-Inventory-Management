@@ -1,0 +1,114 @@
+@startuml Electronic Device Inventory Management - Package Diagram
+
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 60
+
+' ===== Top Layer: Entry Point =====
+package "server" as server {
+  [server.js]
+}
+
+' ===== Second Layer: Routes & Middleware & Config =====
+package "routes" as routes {
+  [authRoutes.js]
+  [deviceRoutes.js]
+  [deviceCategoryRoutes.js]
+  [userRoutes.js]
+  [maintenanceRoutes.js]
+  [assignmentRoutes.js]
+  [warrantyRoutes.js]
+  [depreciationRoutes.js]
+  [systemRoutes.js]
+  [reportRoutes.js]
+  [locationRoutes.js]
+}
+
+package "middleware" as middleware {
+  [auth.js]
+  [errorHandler.js]
+  [roleMiddleware.js]
+  [validators.js]
+}
+
+package "config" as config {
+  [database.js]
+}
+
+' ===== Third Layer: Controllers =====
+package "controllers" as controllers {
+  [authController.js]
+  [deviceController.js]
+  [categoryController.js]
+  [userController.js]
+  [maintenanceController.js]
+  [assignmentController.js]
+  [warrantyController.js]
+  [depreciationController.js]
+  [systemController.js]
+  [reportController.js]
+  [locationController.js]
+}
+
+' ===== Fourth Layer: Services =====
+package "services" as services {
+  [categoryService.js]
+  [depreciationService.js]
+  [locationService.js]
+  [warrantyService.js]
+  [assignmentEmailService.js]
+}
+
+' ===== Bottom Layer: Models & Utils =====
+package "models" as models {
+  [User.js]
+  [Device.js]
+  [DeviceCategory.js]
+  [Assignment.js]
+  [Department.js]
+  [DepreciationRule.js]
+  [Location.js]
+  [MaintenanceRecord.js]
+  [ReportConfigs.js]
+  [SystemSettings.js]
+  [Warranty.js]
+  [WarrantyClaim.js]
+}
+
+package "utils" as utils {
+  [helpers.js]
+  [passwordHelper.js]
+}
+
+' ===== Side: Scripts =====
+package "scripts" as scripts {
+  [seedDatabase.js]
+  [createAdmin.js]
+}
+
+' ===== Dependencies =====
+' server -> routes, middleware, config
+server ..> routes : <<import>>
+server ..> middleware : <<import>>
+server ..> config : <<import>>
+
+' routes -> controllers, middleware
+routes ..> controllers : <<import>>
+routes ..> middleware : <<import>>
+
+' controllers -> models, services, utils
+controllers ..> models : <<import>>
+controllers ..> services : <<import>>
+controllers ..> utils : <<import>>
+
+' services -> models
+services ..> models : <<import>>
+
+' scripts -> models, config, utils
+scripts ..> models : <<import>>
+scripts ..> config : <<import>>
+scripts ..> utils : <<import>>
+
+@enduml
