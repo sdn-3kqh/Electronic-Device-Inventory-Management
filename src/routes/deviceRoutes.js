@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const deviceController = require('../controllers/deviceController');
+const auditLogger = require('../middleware/auditMiddleware');
 const { authenticate, adminOnly, adminOrManager, allRoles } = require('../middleware/auth'); // Import từ auth.js của bạn
 
 // Search and Filter (MUST be before /:id routes to avoid param matching)
@@ -25,11 +26,11 @@ router.put('/bulk/update-status', [authenticate, adminOrManager], deviceControll
 router.put('/bulk/update-location', [authenticate, adminOrManager], deviceController.bulkUpdateLocation); // Bulk update location
 
 // CRUD Routes
-router.post('/', [authenticate, adminOrManager], deviceController.addDevice); // Admin/IM: Add
+router.post('/', [authenticate, adminOrManager,auditLogger], deviceController.addDevice); // Admin/IM: Add
 router.get('/', [authenticate, allRoles], deviceController.getAllDevices); // All: List with pagination
 router.get('/:id', [authenticate, allRoles], deviceController.getDeviceDetails); // All: View details (Staff chỉ view assigned, nhưng implement thêm logic trong controller nếu cần)
-router.put('/:id', [authenticate, adminOrManager], deviceController.updateDevice); // Admin/IM: Update
-router.delete('/:id', [authenticate, adminOrManager], deviceController.deleteDevice); // Admin/IM: Delete
-router.patch('/:id/dispose', [authenticate, adminOrManager], deviceController.disposeDevice); // Admin/IM: Dispose
+router.put('/:id', [authenticate, adminOrManager, auditLogger], deviceController.updateDevice); // Admin/IM: Update
+router.delete('/:id', [authenticate, adminOrManager, auditLogger], deviceController.deleteDevice); // Admin/IM: Delete
+router.patch('/:id/dispose', [authenticate, adminOrManager, auditLogger], deviceController.disposeDevice); // Admin/IM: Dispose
 
 module.exports = router;

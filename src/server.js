@@ -16,6 +16,7 @@ const warrantyRoutes = require('./routes/warrantyRoutes');
 const depreciationRoutes = require('./routes/depreciationRoutes');
 const systemRoutes = require('./routes/systemRoutes');
 const reportRoutes = require('./routes/reportRoutes');
+const auditLogRoutes = require('./routes/auditLogRoutes');
 // const userRoutes = require('./routes/userRoutes');
 // const departmentRoutes = require('./routes/departmentRoutes');
 const locationRoutes = require('./routes/locationRoutes');
@@ -30,6 +31,10 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Global Audit Logger Middleware
+const auditLogger = require('./middleware/auditMiddleware');
+app.use(auditLogger);
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -46,6 +51,7 @@ app.use('/api/depreciation', depreciationRoutes);
 app.use('/api/system', systemRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/locations', locationRoutes);
+app.use('/api/audit-logs', auditLogRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
